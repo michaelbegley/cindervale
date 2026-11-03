@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-DdC0pFUkK93+2q6xBh71ZaVP+7nrPznUda7NC1Fcq54='; style-src 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; img-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-25u7UIt81fWfjC96y1jZENPSSiCpsKpglotzyLspWfo='; style-src 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; img-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <title>CINDERVALE</title>
 <style>
@@ -28,7 +28,7 @@
   #bB{right:98px;bottom:26px;width:56px;height:56px;border-radius:50%;font-size:11px}
   #join-input{display:none;position:fixed;left:50%;top:50%;
     transform:translate(-50%,-50%);
-    width:140px;padding:8px 4px;font:22px ui-monospace,monospace;
+    width:190px;padding:8px 4px;font:22px ui-monospace,monospace;
     background:#241b2f;color:#fff2b0;border:2px solid #ffd257;
     border-radius:6px;text-align:center;letter-spacing:8px;
     text-transform:uppercase;z-index:20;outline:none;
@@ -45,7 +45,7 @@
   <div class="tb" id="bA" data-k="tA">STRIKE</div>
   <div class="tb" id="bB" data-k="tB">DASH</div>
 </div>
-<input id="join-input" type="text" maxlength="4" autocomplete="off"
+<input id="join-input" type="text" maxlength="6" autocomplete="off"
   autocapitalize="characters" spellcheck="false" inputmode="text" />
 <script src="peerjs.min.js"></script>
 <script>
@@ -82,7 +82,7 @@ function outline(src,col){
 function flipX(src){const c=nc(src.width,src.height),g=c.getContext('2d');
   g.translate(src.width,0);g.scale(-1,1);g.drawImage(src,0,0);return c;}
 function randCode(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';
-  for(let i=0;i<4;i++)s+=A[(Math.random()*A.length)|0];return s;}
+  for(let i=0;i<6;i++)s+=A[(Math.random()*A.length)|0];return s;}
 
 /* ---------- palette ---------- */
 const C={grass:'#57b849',grassD:'#49a63c',grassL:'#6fd05c',path:'#d9bd80',pathD:'#c2a468',
@@ -535,7 +535,7 @@ const Net={isHost:false,isClient:false,peer:null,hostConn:null,
   clientJoin(code){
     A.init();A.resume();
     code=(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-    if(code.length!==4){G.joinError='CODE MUST BE 4 CHARS';return;}
+    if(code.length!==6){G.joinError='CODE MUST BE 6 CHARS';return;}
     this.roomCode=code;
     try{this.peer=new Peer({debug:0});}
     catch(e){G.joinError='PEER ERROR';return;}
@@ -1013,7 +1013,7 @@ addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
 /* --- join input --- */
 const joinInput=document.getElementById('join-input');
 joinInput.addEventListener('input',()=>{
-  let v=joinInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4);
+  let v=joinInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
   if(v!==joinInput.value)joinInput.value=v;
   G.joinCode=v;
 });
@@ -1310,8 +1310,8 @@ function drawLobby(){
   if(Net.isHost){
     const code=Net.roomCode;
     text(ctx,'ROOM CODE',Math.round(VW/2-textW('ROOM CODE')/2),34,'#8fd0ff',1,null);
-    ctx.fillStyle='#241b2f';ctx.fillRect(VW/2-30,42,60,20);
-    ctx.strokeStyle='#ffd257';ctx.strokeRect(VW/2-30.5,41.5,60,20);
+    ctx.fillStyle='#241b2f';ctx.fillRect(VW/2-40,42,80,20);
+    ctx.strokeStyle='#ffd257';ctx.strokeRect(VW/2-40.5,41.5,80,20);
     text(ctx,code,Math.round(VW/2-textW(code,3)/2),46,'#fff2b0',3,null);
     if(location.protocol!=='file:'){
       const link=location.origin+location.pathname+'?join='+code;
@@ -1430,9 +1430,9 @@ const qp=new URLSearchParams(location.search);
 const joinParam=qp.get('join');
 if(joinParam){
   activateJoin();
-  G.joinCode=joinParam.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4);
+  G.joinCode=joinParam.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
   joinInput.value=G.joinCode;
-  setTimeout(()=>{if(G.joinCode.length===4)Net.clientJoin(G.joinCode);},400);
+  setTimeout(()=>{if(G.joinCode.length===6)Net.clientJoin(G.joinCode);},400);
 }
 
 requestAnimationFrame(frame);
