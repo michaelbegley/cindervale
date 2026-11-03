@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-tSSbo9X2rppDcDoVR2E05GvyqacItexZhDOatiokoLM='; style-src 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; img-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-SUGiCTkOgKbWK6YNMRQRZZeiqweoM37Q09glyBQDGPE='; style-src 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; img-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0910">
 <meta name="mobile-web-app-capable" content="yes">
@@ -327,7 +327,7 @@ function buildHeroes(){
       d[0][f]=outline(hFront(p,f),'#1a1422');
       d[3][f]=outline(hBack(p,f),'#1a1422');
       const s=outline(hSide(p,f),'#1a1422');
-      d[1][f]=s; d[2][f]=flipX(s);
+      d[2][f]=s; d[1][f]=flipX(s);  // hSide draws facing right
     } HERO.push(d);}}
 
 /* ---------- enemy + boss sprites ---------- */
