@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-DdC0pFUkK93+2q6xBh71ZaVP+7nrPznUda7NC1Fcq54='; style-src 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; img-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
 <title>CINDERVALE</title>
 <style>
   html,body{margin:0;height:100%;background:#0b0910;overflow:hidden;
@@ -45,7 +47,7 @@
 </div>
 <input id="join-input" type="text" maxlength="4" autocomplete="off"
   autocapitalize="characters" spellcheck="false" inputmode="text" />
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="peerjs.min.js"></script>
 <script>
 "use strict";
 /* ============================================================
@@ -555,8 +557,9 @@ const Net={isHost:false,isClient:false,peer:null,hostConn:null,
   onClientMsg(conn,msg){
     if(msg.t==='in'){
       const pl=[...S.players.values()].find(p=>p.peerId===conn.peer);
-      if(pl){pl.in.dx=msg.dx;pl.in.dy=msg.dy;pl.in.a=msg.a;pl.in.b=msg.b;
-        pl.in.dir=msg.dir;}
+      const num=v=>(typeof v==='number'&&Number.isFinite(v))?clamp(v,-1,1):0;
+      if(pl){pl.in.dx=num(msg.dx);pl.in.dy=num(msg.dy);pl.in.a=!!msg.a;pl.in.b=!!msg.b;
+        pl.in.dir=(msg.dir===0||msg.dir===1||msg.dir===2||msg.dir===3)?msg.dir:pl.in.dir;}
     }
   },
   onHostMsg(msg){
